@@ -4,8 +4,6 @@
 
 ---
 
-## 🖼️ Logo
-<!-- Replace with your actual logo path -->
 <p align="center">
   <img src="assets/logo.png" alt="LaunchForge Logo" width="180"/>
 </p>

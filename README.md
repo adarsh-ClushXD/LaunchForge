@@ -170,7 +170,8 @@ App may take a few seconds after system boot to become active
 ---
 
 ## 📸 Screenshots
-<!-- Add your app screenshots here -->
+
+
 
 ---
 
@@ -182,3 +183,4 @@ MIT License
 ## ⭐ Support
 
 If you like this project, give it a ⭐ on GitHub!
+And you can also donate at *gpayadarsh@okaxis*

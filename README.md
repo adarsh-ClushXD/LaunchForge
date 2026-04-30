@@ -171,7 +171,7 @@ App may take a few seconds after system boot to become active
 
 ## 📸 Screenshots
 
-
+<img src="assets/Screenshot 1.png" alt="LaunchForge Logo" width="100"/><img src="assets/logo.png" alt="LaunchForge Logo" width="100"/><img src="assets/logo.png" alt="LaunchForge Logo" width="100"/><img src="assets/logo.png" alt="LaunchForge Logo" width="100"/>
 
 ---
 

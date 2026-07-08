@@ -93,3 +93,9 @@ Tip: For a custom icon, add `--icon assets\tray.ico` once you have an `.ico`.
 - Auto-update mechanism
 - Conflict detection across profiles and OS-reserved key warnings
 
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+

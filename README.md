@@ -1,7 +1,7 @@
 # LaunchForge
 
 <p align="center">
-  <img src="assets/logo.png" alt="LaunchForge Logo" width="180"/>
+  <img src="assets/icons/app.ico" alt="LaunchForge Logo" width="180"/>
 </p>
 
 <p align="center">

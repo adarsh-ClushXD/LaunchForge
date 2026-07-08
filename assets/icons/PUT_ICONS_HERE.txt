@@ -1,0 +1,12 @@
+Drop your custom icons in this folder using these filenames:
+
+- app.ico        (main app/window icon)
+- tray.ico       (system tray icon)
+- settings.png   (tray menu + Settings window icon)
+- profiles.png   (tray menu + Profiles window icon)
+- mappings.png   (tray menu + Key Bindings window icon)
+
+Notes:
+- Prefer .ico for app/tray icons for best Windows rendering.
+- For the menu/window icons, PNG works well (e.g. 24x24 or 32x32).
+

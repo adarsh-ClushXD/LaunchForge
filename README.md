@@ -20,6 +20,26 @@ Whether it's your work setup, gaming setup, or editing setup, one shortcut is al
 
 ---
 
+## Screenshots
+
+<p align="center">
+  <img src="assets/screenshots/Screenshot%201.png" alt="Screenshot 1" width="600"/>
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/Screenshot%202.png" alt="Screenshot 2" width="600"/>
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/Screenshot%203.png" alt="Screenshot 3" width="600"/>
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/Screenshot%204.png" alt="Screenshot 4" width="600"/>
+</p>
+
+---
+
 ## Features
 
 ### • Multi-App Launcher

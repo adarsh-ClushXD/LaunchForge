@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import uuid
 from dataclasses import dataclass
 from typing import Any
@@ -51,7 +52,7 @@ class ConfigSnapshot:
 
 
 class ConfigManager:
-    def __init__(self, paths: AppPaths | None = None, app_name: str = "SmartKeyRemapper") -> None:
+    def __init__(self, paths: AppPaths | None = None, app_name: str = "LaunchForge") -> None:
         self.paths = paths or get_app_paths(app_name=app_name)
         self._raw: dict[str, Any] = _default_config()
 
@@ -71,6 +72,11 @@ class ConfigManager:
 
     def save(self) -> None:
         os.makedirs(os.path.dirname(self.paths.config_path), exist_ok=True)
+        if os.path.exists(self.paths.config_path):
+            try:
+                shutil.copy2(self.paths.config_path, self.paths.config_path + ".bak")
+            except Exception:
+                pass
         with open(self.paths.config_path, "w", encoding="utf-8") as f:
             json.dump(self._raw, f, indent=2)
 

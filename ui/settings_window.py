@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import (
     QCheckBox,
     QComboBox,
@@ -21,6 +21,8 @@ from ui.common import show_error, show_info
 
 
 class SettingsWindow(QWidget):
+    config_imported = Signal()
+
     def __init__(self, cfg: ConfigManager, app_name: str = APP_NAME, parent=None) -> None:
         super().__init__(parent)
         self._cfg = cfg
@@ -81,6 +83,16 @@ class SettingsWindow(QWidget):
             self._cfg.set_setting("theme", self._theme.currentText())
             self._cfg.set_setting("show_notifications", self._notify.isChecked())
             self._cfg.save()
+
+            from PySide6.QtWidgets import QApplication
+            from ui.theme import apply_dark_palette, apply_light_palette
+            app = QApplication.instance()
+            if app:
+                if self._theme.currentText() == "light":
+                    app.setPalette(apply_light_palette(app.palette()))
+                else:
+                    app.setPalette(apply_dark_palette(app.palette()))
+
             show_info(self, "Saved", "Settings saved.")
         except Exception as e:
             show_error(self, "Error", f"Failed to save settings: {e}")
@@ -91,7 +103,8 @@ class SettingsWindow(QWidget):
             return
         try:
             self._cfg.import_from_path(path)
-            show_info(self, "Imported", "Config imported. Restart app to ensure all changes apply.")
+            self.config_imported.emit()
+            show_info(self, "Imported", "Config imported successfully.")
         except Exception as e:
             show_error(self, "Import failed", str(e))
 

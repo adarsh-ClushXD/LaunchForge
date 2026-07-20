@@ -46,11 +46,9 @@ Examples:
 
 ---
 
-### • Global Keyboard Shortcuts
+### • Global Keyboard Shortcuts & Testing
 
-Create custom global hotkeys that work from anywhere in Windows.
-
-No need to search through the Start Menu or keep dozens of desktop shortcuts.
+Create custom global hotkeys that work from anywhere in Windows. You can also test your bindings instantly from the UI using the **Test** button.
 
 ---
 
@@ -62,47 +60,42 @@ Examples:
 
 - Work
 - Gaming
-- Content Creation
 - Development
-- Personal
 
 Switch between profiles anytime from the system tray.
 
 ---
 
-### • Smart Application Detection
+### • Smart Application Detection & Reordering
 
-LaunchForge automatically detects applications installed on your system, including:
-
-- Desktop applications
-- Start Menu applications
-- Hidden Windows applications
-- Applications without easily accessible executable files
-
-You don't need to manually browse through system folders to locate executable files.
+LaunchForge automatically detects applications installed on your system, and allows you to **drag-and-drop** apps to reorder them in your launch sequence.
 
 ---
 
-### • System Tray Integration
+### • Inline Toggles
 
-LaunchForge runs silently in the background.
-
-The tray menu provides quick access to:
-
-- Settings
-- Manage Key Bindings
-- Switch Profiles
-- Exit
-
-No unnecessary windows stay open while working.
+Manage your key bindings quickly with **inline checkboxes** in the table to enable or disable them instantly.
 
 ---
 
-### • Lightweight
+### • System Tray Integration & Live Themes
 
-Designed to consume minimal system resources.
+LaunchForge runs silently in the background. Change between Dark and Light themes from Settings with **live theme application** that refreshes the interface in real-time.
 
-LaunchForge is intended to stay running in the background without affecting system performance.
+---
+
+### • Config Import/Export
+
+Import and export your configuration profiles on the fly with **in-place UI refreshing** (no app restarts required).
+
+---
+
+### • Reliability & Performance
+
+- **Single-Instance Lock**: Prevents multiple tray icons by ensuring only one instance of the app runs at a time.
+- **Automatic Config Backups**: Safely creates `config.json.bak` before saving modifications.
+- **Thread Safety**: Safely captures hotkeys across threads using queued connections.
+- **Lightweight**: Minimal CPU/RAM usage.
 
 ---
 

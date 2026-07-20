@@ -3,6 +3,7 @@ import sys
 
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import QSharedMemory
 
 from core.app_info import APP_NAME, ORG_NAME
 from core.config_manager import ConfigManager
@@ -17,6 +18,11 @@ def main() -> int:
     app.setApplicationName(APP_NAME)
     app.setOrganizationName(ORG_NAME)
     app.setQuitOnLastWindowClosed(False)
+
+    # Single-instance lock
+    shared_mem = QSharedMemory("LaunchForgeSingleInstanceLock")
+    if not shared_mem.create(1):
+        return 0
 
     # Optional: allow running without working dir assumptions
     os.chdir(os.path.dirname(os.path.abspath(__file__)))

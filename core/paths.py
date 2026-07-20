@@ -11,7 +11,7 @@ class AppPaths:
     log_path: str
 
 
-def get_app_paths(app_name: str = "SmartKeyRemapper") -> AppPaths:
+def get_app_paths(app_name: str = "LaunchForge") -> AppPaths:
     appdata = os.environ.get("APPDATA") or os.path.expanduser("~")
     app_dir = os.path.join(appdata, app_name)
     os.makedirs(app_dir, exist_ok=True)

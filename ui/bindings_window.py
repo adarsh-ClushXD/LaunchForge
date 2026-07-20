@@ -55,6 +55,7 @@ class BindingEditorDialog(QDialog):
 
         self._apps = QListWidget()
         self._apps.setSelectionMode(QAbstractItemView.SingleSelection)
+        self._apps.setDragDropMode(QAbstractItemView.InternalMove)
         for app in self._binding.apps:
             self._apps.addItem(self._make_app_item(app))
 
@@ -146,7 +147,7 @@ class BindingEditorDialog(QDialog):
             self._hotkey.setText(hk)
             dlg.accept()
 
-        dlg.captured.connect(_set)
+        dlg.captured.connect(_set, Qt.QueuedConnection)
         dlg.exec()
 
     def get_binding(self) -> KeyBinding:
@@ -213,21 +214,25 @@ class BindingsWindow(QWidget):
         self._table.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
         self._table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self._table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self._table.itemChanged.connect(self._on_item_changed)
 
         self._add = QPushButton("Add")
         self._edit = QPushButton("Edit")
         self._delete = QPushButton("Delete")
+        self._test = QPushButton("Test")
         self._save = QPushButton("Save")
 
         self._add.clicked.connect(self._on_add)
         self._edit.clicked.connect(self._on_edit)
         self._delete.clicked.connect(self._on_delete)
+        self._test.clicked.connect(self._on_test)
         self._save.clicked.connect(self._on_save)
 
         btns = QHBoxLayout()
         btns.addWidget(self._add)
         btns.addWidget(self._edit)
         btns.addWidget(self._delete)
+        btns.addWidget(self._test)
         btns.addStretch(1)
         btns.addWidget(self._save)
 
@@ -296,12 +301,15 @@ class BindingsWindow(QWidget):
         dlg.exec()
 
     def _render(self) -> None:
+        self._table.blockSignals(True)
         self._table.setRowCount(0)
         for b in self._bindings:
             row = self._table.rowCount()
             self._table.insertRow(row)
 
-            enabled_item = QTableWidgetItem("Yes" if b.enabled else "No")
+            enabled_item = QTableWidgetItem("")
+            enabled_item.setFlags(enabled_item.flags() | Qt.ItemIsUserCheckable)
+            enabled_item.setCheckState(Qt.Checked if b.enabled else Qt.Unchecked)
             enabled_item.setData(Qt.UserRole, b.id)
             self._table.setItem(row, 0, enabled_item)
 
@@ -309,10 +317,33 @@ class BindingsWindow(QWidget):
             self._table.setItem(row, 2, QTableWidgetItem(b.hotkey))
             self._table.setItem(row, 3, QTableWidgetItem(str(len(b.apps))))
             self._table.setItem(row, 4, QTableWidgetItem(str(b.delay_ms)))
+        self._table.blockSignals(False)
 
     def _current_index(self) -> int:
         row = self._table.currentRow()
         return row if 0 <= row < len(self._bindings) else -1
+
+    def _on_item_changed(self, item: QTableWidgetItem) -> None:
+        if item.column() == 0:
+            b_id = item.data(Qt.UserRole)
+            for b in self._bindings:
+                if b.id == b_id:
+                    b.enabled = (item.checkState() == Qt.Checked)
+                    break
+
+    def _on_test(self) -> None:
+        idx = self._current_index()
+        if idx < 0:
+            return
+        current = self._bindings[idx]
+        
+        from core.actions import execute_binding
+        from core.models import KeyBinding
+        # Execute copy with enabled=True for testing
+        test_binding = KeyBinding.from_dict({**current.to_dict(), "enabled": True})
+        res = execute_binding(test_binding)
+        if not res.ok:
+            show_error(self, "Test Failed", f"Failed to test binding: {res.message}")
 
     def _on_add(self) -> None:
         dlg = BindingEditorDialog(self)

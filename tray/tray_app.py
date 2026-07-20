@@ -76,6 +76,7 @@ class TrayApp(QObject):
     def open_settings(self) -> None:
         if not self._settings_win:
             self._settings_win = SettingsWindow(self._cfg)
+            self._settings_win.config_imported.connect(self._on_config_imported)
             self._settings_win.destroyed.connect(lambda: setattr(self, "_settings_win", None))
         self._settings_win.show()
         self._settings_win.raise_()
@@ -145,6 +146,15 @@ class TrayApp(QObject):
         self._rebuild_profiles_menu()
         if self._bindings_win:
             self._bindings_win.sync_from_config()
+
+    def _on_config_imported(self) -> None:
+        self._hotkeys.apply_active_profile()
+        self._rebuild_profiles_menu()
+        if self._bindings_win:
+            self._bindings_win.sync_from_config()
+        if self._profiles_win:
+            self._profiles_win._reload()
+        self._apply_theme()
 
     def _on_binding_triggered(self, binding, ok: bool, message: str) -> None:
         snap = self._cfg.snapshot()
